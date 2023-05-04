@@ -5,11 +5,13 @@ class ViewTodosUser extends Component {
       super(props);
     }
 
-    render() { 
+    render() {
+     // console.log(this.props.listTodos) ;
       return (  
         <div>
 
-            {this.props.listTodos.map(todo=>{
+            {this.props.listTodos.map((todo)=>{
+              <p>{todo}</p>
 
             })}
         </div>

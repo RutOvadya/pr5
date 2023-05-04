@@ -33,7 +33,8 @@ class Home extends Component {
         return objUser;
      }
      getTodosById(id){
-        fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
+        //return
+     fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
         .then(response => {if(response.ok) {
                               return response.json();    
                           } else{
@@ -59,6 +60,7 @@ class Home extends Component {
      showTodos(){
         var object= this.getCurrentUser();
         var listTodos= this.getTodosById(object.id);
+        //console.log(listTodos);
         this.setState({contentValue: <ViewTodosUser listTodos={listTodos}/>});  
      }
      showAlbums(){
@@ -68,10 +70,10 @@ class Home extends Component {
         return(
              <div>
              <h1>{this.getCurrentName()}</h1>
-             <button id="exitIcon" className="material-icons" title="Logout" onClick={this.exit}> &#xe879;</button>
-             <button id="infoButton" title="Info" onClick={this.showInfo}>Show My Info</button>
-             <button id="postsButton" title="Posts" onClick={this.showPosts}>Show My Posts</button>
-             <button id="todosButton" title="Todos" onClick={this.showTodos}>Show My Todos</button>
+             <button id="exitIcon" className='fas' title="Logout" onClick={this.exit}>Logout &#xf2f6;</button>
+             <button id="infoButton" className='fas' title="Info" onClick={this.showInfo}>Show My Info &#xf2bb;</button>
+             <button id="postsButton" className='fas' title="Posts" onClick={this.showPosts}>Show My Posts &#xf07c;</button>
+             <button id="todosButton" className='fas' title="Todos" onClick={this.showTodos}>Show My Todos &#xf044;</button>
              <button id="albumsButton" className='fas' title="Albums" onClick={this.showAlbums}>Show My Albums &#xf03e;</button>
              <div id="locationForContent">{this.state.contentValue}</div>
             </div>

@@ -6,14 +6,14 @@ class ViewTodosUser extends Component {
     }
 
     render() {
-     // console.log(this.props.listTodos) ;
+     console.log(typeof(this.props.listTodos[0])) ;
       return (  
         <div>
-
-            {this.props.listTodos.map((todo)=>{
-              <p>{todo}</p>
-
-            })}
+            {this.props.listTodos.map((todo)=>(
+              <div>
+                <p><input type="checkbox" defaultChecked={todo.completed}/>{todo.title}</p>             
+              </div> 
+          ))}
         </div>
       );
     }

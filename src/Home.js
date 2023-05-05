@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ViewInfoUser from './ViewInfoUser';
 import ViewTodosUser from './ViewTodosUser';
+import ViewPostsUser from './ViewPostsUser';
 
 class Home extends Component {
     constructor(props){
@@ -10,11 +11,16 @@ class Home extends Component {
         this.showInfo = this.showInfo.bind(this);
         this.getCurrentUser = this.getCurrentUser.bind(this);
         this.getTodosById = this.getTodosById.bind(this);
+        this.getPostsById = this.getPostsById.bind(this);
         this.showPosts = this.showPosts.bind(this);
         this.showAlbums = this.showAlbums.bind(this);
         this.showTodos = this.showTodos.bind(this);
         this.state={
             contentValue:''
+        };
+        this.data={
+            generalListPosts:[],
+            generalListTodos: []
         };
     }
 
@@ -32,8 +38,24 @@ class Home extends Component {
         var objUser=JSON.parse(user);
         return objUser;
      }
+     getPostsById(id){
+     fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
+        .then(response => {if(response.ok) {
+                              return response.json();    
+                          } else{
+                             throw "Request failed!";    
+                      }
+          })
+        .then(listPosts=> {if(listPosts.length==0){
+                          throw "You have not Posts";
+                      }else{
+                        this.data.generalListPosts=listPosts;
+                        return listPosts;
+                      }
+          })
+        .catch(error=>alert(""+error));
+     }
      getTodosById(id){
-        //return
      fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
         .then(response => {if(response.ok) {
                               return response.json();    
@@ -44,7 +66,8 @@ class Home extends Component {
         .then(listTodos=> {if(listTodos.length==0){
                           throw "You have not Todos";
                       }else{
-                          return listTodos;
+                        this.data.generalListTodos=listTodos;
+                        return listTodos;
                       }
           })
         .catch(error=>alert(""+error));
@@ -54,14 +77,16 @@ class Home extends Component {
         this.setState({contentValue: <ViewInfoUser user={object}/>});
      }
      showPosts(){
-        
-
+        var object= this.getCurrentUser();
+        this.getPostsById(object.id);
+        //גם פה רק בלחיצה השניה הוא מביא
+        this.setState({contentValue: <ViewPostsUser listPosts={this.data.generalListPosts}/>});  
      }
      showTodos(){
         var object= this.getCurrentUser();
-        var listTodos= this.getTodosById(object.id);
-        //console.log(listTodos);
-        this.setState({contentValue: <ViewTodosUser listTodos={listTodos}/>});  
+        this.getTodosById(object.id);
+       // .. יש בעיה שהרשימה הכללית מתעדכנת רק בלחיצה השניה
+        this.setState({contentValue: <ViewTodosUser listTodos={this.data.generalListTodos}/>});  
      }
      showAlbums(){
 

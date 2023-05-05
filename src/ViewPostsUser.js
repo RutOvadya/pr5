@@ -5,31 +5,26 @@ class ViewPostsUser extends Component {
       super(props);
       this.boldThePost = this.boldThePost.bind(this);
       this.showComments = this.showComments.bind(this);
-      this.state={
-        cuurentPost:""
-      };
     }
 
-    showComments(){
+    showComments(id){
 
     }
-    boldThePost(){
-        return <div>
-            <p>{this.state.cuurentPost.body}</p>
-            <button id="commentsBtn" className='fas' title="Comments" onClick={this.showComments}>View the comments &#xf086;</button> 
-           </div> 
+    boldThePost(id){
+      var body= document.getElementById("postBody");
+      var currentPost= this.props.listPosts[id-1];
+     // body.innerText=currentPost.body;//זה הרציונאל,  להציג את גוף הפוסט
     }
 
     render() {
       return (  
         <div>
             {this.props.listPosts.map((post)=>(
-                this.setState({cuurentPost:post}),
             <div>
-                <a onClick={this.boldThePost}>{post.id}. {post.title}</a>  
-                {/* <p id="postBody">{post.body}</p>            */}
-             </div> 
-             
+                <a href={this.boldThePost(post.id)}>{post.id}. {post.title}</a>  
+                <p id="postBody"></p>    
+                <button id="commentsBtn" className='fas' title="Comments" onClick={this.showComments(post.id)}>View the comments &#xf086;</button>    
+             </div>        
           ))}
         </div>
       );

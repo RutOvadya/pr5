@@ -19,7 +19,7 @@ class Home extends Component {
             contentValue:''
         };
         this.data={
-            generalListPosts:[],
+            generalListPosts: [],
             generalListTodos: []
         };
     }

@@ -11,7 +11,7 @@ class ViewTodosUser extends Component {
         <div>
             {this.props.listTodos.map((todo)=>(
               <div>
-                <p><input type="checkbox" defaultChecked={todo.completed}/>{todo.title}</p>             
+                <p><input id="checkBox" type="checkbox" defaultChecked={todo.completed}/>{todo.title}</p>             
               </div> 
           ))}
         </div>

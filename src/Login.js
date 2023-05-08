@@ -1,5 +1,5 @@
-//import './Login.css';
 import React, { Component } from "react";
+import './Login.css';
 
 class Login extends Component {
     constructor(props){
@@ -36,15 +36,16 @@ class Login extends Component {
 
     render(){
         return(
-            <div>
-                <h1>WELCOME</h1>
+            <div id="loginContainer">
+                <h1 id="welcome">WELCOME</h1>
                 <form>
-                <label htmlFor="name">name</label>
-                <input type="text" id="username" name="name" required></input>
-                <label htmlFor="password">password</label>
-                <input type="text" id="password" name="password" required></input>
+                <label class="label" htmlFor="name">name: </label>
+                <input class="box" type="text" id="username" name="name" required></input>
+                <label class="label" htmlFor="password"> password: </label>
+                <input class="box" type="text" id="password" name="password" required></input>
                 </form>               
                 <button id="login" onClick={this.loginFunction}>Login</button>
+                <footer class="footer">COPYRIGHT © 2023 BY AVITAL & RUT</footer>
             </div>
         );
     };

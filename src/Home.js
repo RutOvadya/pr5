@@ -1,7 +1,12 @@
 import React, { Component } from "react";
+import Styles from "./Home.css"
+
+//import './Home.css';
+import Login from './Login';
 import ViewInfoUser from './ViewInfoUser';
 import ViewTodosUser from './ViewTodosUser';
 import ViewPostsUser from './ViewPostsUser';
+import ViewAlbumsUser from './ViewAlbumsUser';
 
 class Home extends Component {
     constructor(props){
@@ -12,6 +17,7 @@ class Home extends Component {
         this.getCurrentUser = this.getCurrentUser.bind(this);
         this.getTodosById = this.getTodosById.bind(this);
         this.getPostsById = this.getPostsById.bind(this);
+        this.getAlbumsById = this.getAlbumsById.bind(this);
         this.showPosts = this.showPosts.bind(this);
         this.showAlbums = this.showAlbums.bind(this);
         this.showTodos = this.showTodos.bind(this);
@@ -20,7 +26,8 @@ class Home extends Component {
         };
         this.data={
             generalListPosts: [],
-            generalListTodos: []
+            generalListTodos: [],
+            generalListAlbums: []
         };
     }
 
@@ -31,6 +38,7 @@ class Home extends Component {
      }
      exit(){
         localStorage.removeItem("currentUser");
+        //super.setState({contentValue: <Login/>});
         //חזרה לעמוד הכניסה
      }
      getCurrentUser(){
@@ -38,6 +46,23 @@ class Home extends Component {
         var objUser=JSON.parse(user);
         return objUser;
      }
+     getAlbumsById(id){
+        fetch(`https://jsonplaceholder.typicode.com/albums?userId=${id}`)
+           .then(response => {if(response.ok) {
+                                 return response.json();    
+                             } else{
+                                throw "Request failed!";    
+                         }
+             })
+           .then(listAlbums=> {if(listAlbums.length==0){
+                             throw "You have not Albums";
+                         }else{
+                           this.data.generalListAlbums=listAlbums;
+                           return listAlbums;
+                         }
+             })
+           .catch(error=>alert(""+error));
+    }
      getPostsById(id){
      fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
         .then(response => {if(response.ok) {
@@ -89,18 +114,21 @@ class Home extends Component {
         this.setState({contentValue: <ViewTodosUser listTodos={this.data.generalListTodos}/>});  
      }
      showAlbums(){
-
+        var object= this.getCurrentUser();
+        this.getAlbumsById(object.id);
+        this.setState({contentValue: <ViewAlbumsUser listAlbums={this.data.generalListAlbums}/>});  
      }
     render(){
         return(
-             <div>
-             <h1>{this.getCurrentName()}</h1>
+             <div id="homeContainer">
+             <h1 id="currentName">Hello {this.getCurrentName()}</h1>
              <button id="exitIcon" className='fas' title="Logout" onClick={this.exit}>Logout &#xf2f6;</button>
              <button id="infoButton" className='fas' title="Info" onClick={this.showInfo}>Show My Info &#xf2bb;</button>
              <button id="postsButton" className='fas' title="Posts" onClick={this.showPosts}>Show My Posts &#xf07c;</button>
              <button id="todosButton" className='fas' title="Todos" onClick={this.showTodos}>Show My Todos &#xf044;</button>
              <button id="albumsButton" className='fas' title="Albums" onClick={this.showAlbums}>Show My Albums &#xf03e;</button>
              <div id="locationForContent">{this.state.contentValue}</div>
+             <footer class="footer">COPYRIGHT © 2023 BY AVITAL & RUT</footer>
             </div>
         );
         

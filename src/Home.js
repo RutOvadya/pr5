@@ -46,8 +46,8 @@ class Home extends Component {
         var objUser=JSON.parse(user);
         return objUser;
      }
-     getAlbumsById(id){
-        fetch(`https://jsonplaceholder.typicode.com/albums?userId=${id}`)
+     async getAlbumsById(id){
+        await fetch(`https://jsonplaceholder.typicode.com/albums?userId=${id}`)
            .then(response => {if(response.ok) {
                                  return response.json();    
                              } else{
@@ -63,8 +63,8 @@ class Home extends Component {
              })
            .catch(error=>alert(""+error));
     }
-     getPostsById(id){
-     fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
+     async getPostsById(id){
+     await fetch(`https://jsonplaceholder.typicode.com/posts?userId=${id}`)
         .then(response => {if(response.ok) {
                               return response.json();    
                           } else{
@@ -80,8 +80,8 @@ class Home extends Component {
           })
         .catch(error=>alert(""+error));
      }
-     getTodosById(id){
-     fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
+     async getTodosById(id){
+     await fetch(`https://jsonplaceholder.typicode.com/todos?userId=${id}`)
         .then(response => {if(response.ok) {
                               return response.json();    
                           } else{
@@ -101,21 +101,19 @@ class Home extends Component {
         var object= this.getCurrentUser();
         this.setState({contentValue: <ViewInfoUser user={object}/>});
      }
-     showPosts(){
+     async showPosts(){
         var object= this.getCurrentUser();
-        this.getPostsById(object.id);
-        //גם פה רק בלחיצה השניה הוא מביא
+        await this.getPostsById(object.id);
         this.setState({contentValue: <ViewPostsUser listPosts={this.data.generalListPosts}/>});  
      }
-     showTodos(){
+     async showTodos(){
         var object= this.getCurrentUser();
-        this.getTodosById(object.id);
-       // .. יש בעיה שהרשימה הכללית מתעדכנת רק בלחיצה השניה
+        await this.getTodosById(object.id);
         this.setState({contentValue: <ViewTodosUser listTodos={this.data.generalListTodos}/>});  
      }
-     showAlbums(){
+     async showAlbums(){
         var object= this.getCurrentUser();
-        this.getAlbumsById(object.id);
+        await this.getAlbumsById(object.id);
         this.setState({contentValue: <ViewAlbumsUser listAlbums={this.data.generalListAlbums}/>});  
      }
     render(){

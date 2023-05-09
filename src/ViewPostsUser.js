@@ -13,8 +13,8 @@ class ViewPostsUser extends Component {
        };  
     }
 
-    getCurrentComments(id){
-      fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
+    async getCurrentComments(id){
+      await fetch(`https://jsonplaceholder.typicode.com/comments?postId=${id}`)
         .then(response => {if(response.ok) {
                               return response.json();    
                           } else{
@@ -31,9 +31,9 @@ class ViewPostsUser extends Component {
         .catch(error=>alert(""+error));
     }
 
-    showComments(id){
+    async showComments(id){
       var comments= document.getElementById("forComments");
-      this.getCurrentComments(id);
+      await this.getCurrentComments(id);
       this.data.CommentForPost.map((comment)=>(
         comments.innerHTML+= comment.name + "\r\n" + comment.body+ "\r\n"
       ));

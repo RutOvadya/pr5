@@ -45,7 +45,7 @@ class Login extends Component {
                     <input class="box" type="text" id="password" name="password" required></input>
                 </form>               
                 <button id="login" onClick={this.loginFunction}>Login</button>
-                <footer class="footer">COPYRIGHT © 2023 BY AVITAL & RUT</footer>
+                {/* <footer class="footer">COPYRIGHT © 2023 BY AVITAL & RUT</footer> */}
             </div>
         );
     };
